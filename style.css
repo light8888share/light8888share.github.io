@@ -86,7 +86,8 @@ body {
 .link-item {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 1rem;
     width: 100%;
     padding: 1.1rem 1.5rem;
     background-color: #e0ecff;
@@ -96,6 +97,8 @@ body {
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
+    line-height: 1.4;
+    text-align: left;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -125,9 +128,8 @@ body {
 
 /* アイコン */
 .link-icon {
-    position: absolute;
-    left: 1.5rem;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    flex-shrink: 0;
 }
 
 .link-item.featured .link-icon {
