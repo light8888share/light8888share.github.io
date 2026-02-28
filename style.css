@@ -138,8 +138,8 @@ body {
 
 /* マスコットキャラクター */
 .mascot-img {
-    width: 90px;
-    height: 90px;
+    width: 120px;
+    height: 120px;
     object-fit: contain;
     margin-top: -0.5rem;
     animation: float 3s ease-in-out infinite;
