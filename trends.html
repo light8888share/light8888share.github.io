@@ -21,7 +21,9 @@
             <!-- Calendar Navigation -->
             <div id="calendar-widget" class="calendar-widget">
                 <div class="calendar-header">
+                    <button id="prev-month" class="calendar-btn"><i class="fa-solid fa-chevron-left"></i></button>
                     <span id="calendar-month-year">2026年 3月</span>
+                    <button id="next-month" class="calendar-btn"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
                 <div class="calendar-grid-header">
                     <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
@@ -234,50 +236,83 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const calendarDays = document.getElementById('calendar-days');
+            const monthYearLabel = document.getElementById('calendar-month-year');
+            const prevBtn = document.getElementById('prev-month');
+            const nextBtn = document.getElementById('next-month');
             
             // 記事がある日付のリストを自動取得
             const articleElements = document.querySelectorAll('.category-title[id^="date-"]');
             const articleDates = Array.from(articleElements).map(el => el.id.replace('date-', ''));
             
-            // カレンダー生成（2026年3月）
-            const year = 2026;
-            const month = 2; // March
-            
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            
-            // 空白埋め
-            for (let i = 0; i < firstDay; i++) {
-                calendarDays.appendChild(document.createElement('div'));
-            }
-            
-            // 日付生成
-            for (let d = 1; d <= daysInMonth; d++) {
-                const dayDiv = document.createElement('div');
-                dayDiv.className = 'calendar-day';
-                dayDiv.textContent = d;
-                
-                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-                
-                if (articleDates.includes(dateStr)) {
-                    dayDiv.classList.add('has-article');
-                    dayDiv.title = "記事あり";
-                    dayDiv.addEventListener('click', () => {
-                        const target = document.getElementById(`date-${dateStr}`);
-                        if (target) {
-                            const offset = 40;
-                            const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
-                            const offsetPosition = elementPosition - offset;
+            // 現在の表示年月（初期表示は最新の記事がある2026年3月）
+            let currentYear = 2026;
+            let currentMonth = 2; // 0-indexed (March is 2)
 
-                            window.scrollTo({
-                                top: offsetPosition,
-                                behavior: 'smooth'
-                            });
-                        }
-                    });
+            function renderCalendar(year, month) {
+                // ラベル更新
+                monthYearLabel.textContent = `${year}年 ${month + 1}月`;
+                
+                // カレンダーをクリア
+                calendarDays.innerHTML = '';
+                
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                
+                // 空白埋め
+                for (let i = 0; i < firstDay; i++) {
+                    calendarDays.appendChild(document.createElement('div'));
                 }
-                calendarDays.appendChild(dayDiv);
+                
+                // 日付生成
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const dayDiv = document.createElement('div');
+                    dayDiv.className = 'calendar-day';
+                    dayDiv.textContent = d;
+                    
+                    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                    
+                    if (articleDates.includes(dateStr)) {
+                        dayDiv.classList.add('has-article');
+                        dayDiv.title = "記事あり";
+                        dayDiv.addEventListener('click', () => {
+                            const target = document.getElementById(`date-${dateStr}`);
+                            if (target) {
+                                const offset = 40;
+                                const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+                                const offsetPosition = elementPosition - offset;
+
+                                window.scrollTo({
+                                    top: offsetPosition,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        });
+                    }
+                    calendarDays.appendChild(dayDiv);
+                }
             }
+
+            // 初期表示
+            renderCalendar(currentYear, currentMonth);
+
+            // 前月・次月ボタンの動作
+            prevBtn.addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                renderCalendar(currentYear, currentMonth);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                renderCalendar(currentYear, currentMonth);
+            });
         });
     </script>
 </body>
