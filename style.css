@@ -234,6 +234,88 @@ body::after {
     border-radius: 50%;
 }
 
+/* Hot Picks Carousel */
+.hot-picks {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    width: 100%;
+    padding: 0.5rem 0.2rem 1.5rem;
+    scrollbar-width: none; /* Hide scrollbar Firefox */
+    -ms-overflow-style: none;  /* Hide scrollbar IE/Edge */
+}
+
+.hot-picks::-webkit-scrollbar {
+    display: none; /* Hide scrollbar Chrome/Safari */
+}
+
+.pick-item {
+    flex: 0 0 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.2rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.pick-item:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.pick-icon-wrapper {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(6, 182, 212, 0.2));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+    position: relative;
+}
+
+.pick-icon-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, #6366f1, #06b6d4);
+    border-radius: 14px;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+.pick-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.pick-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #f43f5e;
+    color: white;
+    font-size: 0.55rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 900;
+}
+
 /* Links Section */
 .links {
     width: 100%;
