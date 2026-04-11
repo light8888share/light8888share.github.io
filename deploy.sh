@@ -3,8 +3,14 @@
 # LinkTreeの自動公開スクリプト
 echo "🚀 ネットへの公開（デプロイ）を開始します..."
 
-# フォルダに移動
-cd "/Users/yaji03-1/Library/CloudStorage/GoogleDrive-yajitoteru@gmail.com/マイドライブ/50_googleAntigravity_project/06_LinkTree"
+# 自身が存在するフォルダに移動（ポータビリティの向上）
+cd "$(dirname "$0")"
+
+# Git リポジトリの確認
+if [ ! -d ".git" ]; then
+    echo "⚠️ .git フォルダが見つかりません。git init を実行するか、リポジトリ環境を確認してください。"
+    exit 1
+fi
 
 # 変更されたファイルを全て追加
 git add .
